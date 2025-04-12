@@ -1,4 +1,3 @@
-// Add to all controller and service files
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,6 @@ using CourseRegistration.Services;
 
 namespace CourseRegistration.Controllers
 {
-    [Route("[controller]")]
     public class RegistrationsController : Controller
     {
         private readonly CourseRegistrationDbContext _context;
@@ -26,20 +24,20 @@ namespace CourseRegistration.Controllers
         }
         
         // GET: Registrations/Register/5
-        [HttpGet("Register/{id}")]
-        public async Task<IActionResult> Register(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Register(int id)
         {
-            if (id == null)
-                return NotFound();
-                
-            var section = await _registrationService.GetSectionDetailsAsync(id.Value);
+            var section = await _registrationService.GetSectionDetailsAsync(id);
                 
             if (section == null)
                 return NotFound();
                 
             // Check if registration deadline has passed
             if (section.RegistrationDeadline <= DateTime.Now)
+            {
+                TempData["ErrorMessage"] = "Registration deadline has passed for this section.";
                 return RedirectToAction("Index", "Sections");
+            }
                 
             // Check if section is full
             if (section.AvailableSeats <= 0)
@@ -65,7 +63,7 @@ namespace CourseRegistration.Controllers
         }
         
         // POST: Registrations/Register
-        [HttpPost("Register")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegistrationViewModel model)
         {
@@ -108,13 +106,10 @@ namespace CourseRegistration.Controllers
         }
         
         // GET: Registrations/List/5
-        [HttpGet("List/{id}")]
-        public async Task<IActionResult> List(int? id)
+        [HttpGet]
+        public async Task<IActionResult> List(int id)
         {
-            if (id == null)
-                return NotFound();
-                
-            var viewModel = await _registrationService.GetRegistrationsForSectionAsync(id.Value);
+            var viewModel = await _registrationService.GetRegistrationsForSectionAsync(id);
                 
             if (viewModel == null)
                 return NotFound();
