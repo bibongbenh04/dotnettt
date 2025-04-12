@@ -1,0 +1,73 @@
+@model IEnumerable<CourseRegistration.Models.ViewModels.SectionViewModel>
+
+@{
+    ViewData["Title"] = "Course Sections";
+}
+
+<h1>Course Sections</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Available Sections</h5>
+    </div>
+    <div class="card-body">
+        <p>This table lists all course sections available for registration, including instructor details, schedule, and seat availability.</p>
+        <a asp-action="Create" class="btn btn-success">Create New Section</a>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No sections found. Please create a new section.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Course</th>
+                <th>Section</th>
+                <th>Instructor</th>
+                <th>Schedule</th>
+                <th>Location</th>
+                <th>Seats</th>
+                <th>Registration Deadline</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CourseCode - @item.CourseTitle</td>
+                    <td>@item.SectionNumber</td>
+                    <td>@item.Instructor</td>
+                    <td>@item.Schedule</td>
+                    <td>@item.Location</td>
+                    <td>
+                        @item.AvailableSeats / @item.Capacity
+                        @if (item.AvailableSeats == 0)
+                        {
+                            <span class="badge bg-danger ms-2">Full</span>
+                        }
+                        else if (item.AvailableSeats <= 3)
+                        {
+                            <span class="badge bg-warning text-dark ms-2">Almost full</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success ms-2">Available</span>
+                        }
+                    </td>
+                    <td>@item.RegistrationDeadline.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                        <a asp-controller="Registrations" asp-action="Register" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Register</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,75 @@
+@model CourseRegistration.Models.Entities.Course
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<h1>Course Details</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>@Model.Code - @Model.Title</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Course Code:</dt>
+            <dd class="col-sm-9">@Model.Code</dd>
+            
+            <dt class="col-sm-3">Title:</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+            
+            <dt class="col-sm-3">Credits:</dt>
+            <dd class="col-sm-9">@Model.Credits</dd>
+            
+            <dt class="col-sm-3">Department:</dt>
+            <dd class="col-sm-9">@Model.Department?.Name</dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+
+<h3>Sections</h3>
+
+@if (Model.Sections == null || !Model.Sections.Any())
+{
+    <div class="alert alert-info">
+        No sections available for this course.
+    </div>
+    <a asp-controller="Sections" asp-action="Create" asp-route-courseId="@Model.Id" class="btn btn-primary">Create Section</a>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Section</th>
+                <th>Semester</th>
+                <th>Instructor</th>
+                <th>Schedule</th>
+                <th>Location</th>
+                <th>Capacity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var courseSection in Model.Sections)
+            {
+                <tr>
+                    <td>@courseSection.SectionNumber</td>
+                    <td>@courseSection.Semester @courseSection.Year</td>
+                    <td>@courseSection.Instructor</td>
+                    <td>@courseSection.Schedule</td>
+                    <td>@courseSection.Location</td>
+                    <td>@courseSection.Capacity</td>
+                    <td>
+                        <a asp-controller="Sections" asp-action="Details" asp-route-id="@courseSection.Id" class="btn btn-info btn-sm">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="Sections" asp-action="Create" asp-route-courseId="@Model.Id" class="btn btn-primary">Create Section</a>
+}

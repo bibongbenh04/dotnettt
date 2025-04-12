@@ -1,0 +1,33 @@
+@model IEnumerable<CourseRegistration.Models.Entities.Department>
+
+@{
+    ViewData["Title"] = "Departments";
+}
+
+<h1>Departments</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.Name</td>
+                <td>
+                    <a asp-controller="Courses" asp-action="Index" asp-route-departmentId="@item.Id" class="btn btn-info btn-sm">View Courses</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

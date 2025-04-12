@@ -1,0 +1,70 @@
+@model RegistrationListViewModel
+
+@{
+    ViewData["Title"] = "Section Registrations";
+}
+
+<h1>Section Registrations</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>Section Details</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Course:</dt>
+            <dd class="col-sm-9">@Model.CourseCode - @Model.CourseTitle</dd>
+            
+            <dt class="col-sm-3">Section:</dt>
+            <dd class="col-sm-9">@Model.SectionNumber</dd>
+            
+            <dt class="col-sm-3">Instructor:</dt>
+            <dd class="col-sm-9">@Model.Instructor</dd>
+            
+            <dt class="col-sm-3">Schedule:</dt>
+            <dd class="col-sm-9">@Model.Schedule</dd>
+            
+            <dt class="col-sm-3">Registration Status:</dt>
+            <dd class="col-sm-9">@Model.RegisteredCount / @Model.Capacity seats filled</dd>
+        </dl>
+    </div>
+</div>
+
+<h3>Registered Students</h3>
+
+@if (Model.Registrations.Count == 0)
+{
+    <div class="alert alert-info">
+        No students have registered for this section yet.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Registration Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var registration in Model.Registrations)
+            {
+                <tr>
+                    <td>@registration.StudentId</td>
+                    <td>@registration.StudentName</td>
+                    <td>@registration.StudentEmail</td>
+                    <td>@registration.StudentPhone</td>
+                    <td>@registration.RegistrationDate.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-controller="Sections" asp-action="Index" class="btn btn-primary">Back to Sections</a>
+</div>

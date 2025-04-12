@@ -1,0 +1,88 @@
+@model RegistrationViewModel
+
+@{
+    ViewData["Title"] = "Course Registration";
+}
+
+<h1>Course Registration</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Section Details</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Course:</dt>
+                    <dd class="col-sm-8">@Model.CourseCode - @Model.CourseTitle</dd>
+                    
+                    <dt class="col-sm-4">Section:</dt>
+                    <dd class="col-sm-8">@Model.SectionNumber</dd>
+                    
+                    <dt class="col-sm-4">Instructor:</dt>
+                    <dd class="col-sm-8">@Model.Instructor</dd>
+                    
+                    <dt class="col-sm-4">Schedule:</dt>
+                    <dd class="col-sm-8">@Model.Schedule</dd>
+                    
+                    <dt class="col-sm-4">Location:</dt>
+                    <dd class="col-sm-8">@Model.Location</dd>
+                    
+                    <dt class="col-sm-4">Credits:</dt>
+                    <dd class="col-sm-8">@Model.Credits</dd>
+                    
+                    <dt class="col-sm-4">Available Seats:</dt>
+                    <dd class="col-sm-8">@Model.AvailableSeats</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Student Information</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="SectionId" />
+                    
+                    <div class="form-group">
+                        <label asp-for="StudentId" class="control-label">Student ID</label>
+                        <input asp-for="StudentId" class="form-control" />
+                        <span asp-validation-for="StudentId" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="StudentName" class="control-label">Full Name</label>
+                        <input asp-for="StudentName" class="form-control" />
+                        <span asp-validation-for="StudentName" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="StudentEmail" class="control-label">Email</label>
+                        <input asp-for="StudentEmail" class="form-control" type="email" />
+                        <span asp-validation-for="StudentEmail" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="StudentPhone" class="control-label">Phone Number</label>
+                        <input asp-for="StudentPhone" class="form-control" />
+                        <span asp-validation-for="StudentPhone" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group mt-3">
+                        <input type="submit" value="Register" class="btn btn-primary" />
+                        <a asp-controller="Sections" asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

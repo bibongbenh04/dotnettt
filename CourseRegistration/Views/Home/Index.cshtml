@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Course Registration System</h1>
+    <p>Browse available courses and register for sections.</p>
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Departments</h5>
+                    <p class="card-text">Browse departments</p>
+                    <a asp-controller="Departments" asp-action="Index" class="btn btn-primary">View Departments</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Courses</h5>
+                    <p class="card-text">Browse available courses</p>
+                    <a asp-controller="Courses" asp-action="Index" class="btn btn-primary">View Courses</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sections</h5>
+                    <p class="card-text">View available course sections</p>
+                    <a asp-controller="Sections" asp-action="Index" class="btn btn-primary">View Sections</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

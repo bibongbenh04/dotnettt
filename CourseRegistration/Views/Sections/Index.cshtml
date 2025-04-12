@@ -1,0 +1,53 @@
+@model IEnumerable<CourseRegistration.Models.ViewModels.SectionViewModel>
+
+@{
+    ViewData["Title"] = "Course Sections";
+}
+
+<h1>Course Sections</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Section</a>
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No sections found. Please create a new section.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Section</th>
+                <th>Instructor</th>
+                <th>Schedule</th>
+                <th>Location</th>
+                <th>Available Seats</th>
+                <th>Registration Deadline</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CourseCode - @item.CourseTitle</td>
+                    <td>@item.SectionNumber</td>
+                    <td>@item.Instructor</td>
+                    <td>@item.Schedule</td>
+                    <td>@item.Location</td>
+                    <td>@item.AvailableSeats / @item.Capacity</td>
+                    <td>@item.RegistrationDeadline.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">Details</a>
+                        <a asp-controller="Registrations" asp-action="Register" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Register</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

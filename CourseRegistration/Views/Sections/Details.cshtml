@@ -1,0 +1,45 @@
+@model CourseRegistration.Models.ViewModels.SectionViewModel
+
+@{
+    ViewData["Title"] = "Section Details";
+}
+
+<h1>Section Details</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5>@Model.CourseCode - @Model.CourseTitle (Section @Model.SectionNumber)</h5>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Course:</dt>
+            <dd class="col-sm-9">@Model.CourseCode - @Model.CourseTitle</dd>
+            
+            <dt class="col-sm-3">Section:</dt>
+            <dd class="col-sm-9">@Model.SectionNumber</dd>
+            
+            <dt class="col-sm-3">Instructor:</dt>
+            <dd class="col-sm-9">@Model.Instructor</dd>
+            
+            <dt class="col-sm-3">Schedule:</dt>
+            <dd class="col-sm-9">@Model.Schedule</dd>
+            
+            <dt class="col-sm-3">Location:</dt>
+            <dd class="col-sm-9">@Model.Location</dd>
+            
+            <dt class="col-sm-3">Available Seats:</dt>
+            <dd class="col-sm-9">@Model.AvailableSeats / @Model.Capacity</dd>
+            
+            <dt class="col-sm-3">Registration Deadline:</dt>
+            <dd class="col-sm-9">@Model.RegistrationDeadline.ToString("yyyy-MM-dd")</dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        @if (Model.RegistrationDeadline > DateTime.Now && Model.AvailableSeats > 0)
+        {
+            <a asp-controller="Registrations" asp-action="Register" asp-route-id="@Model.Id" class="btn btn-primary">Register for this Section</a>
+        }
+        <a asp-controller="Registrations" asp-action="List" asp-route-id="@Model.Id" class="btn btn-info">View Registrations</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
